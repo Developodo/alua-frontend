@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment.development';
   providedIn: 'root'
 })
 export class ApiService {
-   apiURL=environment.urlApi;
+  apiURL=environment.urlApi;
   session = inject(LocalSessionService);
 
   constructor(private http: HttpClient) { }
