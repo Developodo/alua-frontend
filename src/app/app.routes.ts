@@ -10,6 +10,7 @@ import { ViewChallengeComponentPage } from './pages/view-challenge/view-challeng
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
+    { path: 'login/:url', component: LoginComponent },
     { path: 'activities', component: ActivitiesComponent },
     { path: 'challenge/:id', component:ViewChallengeComponentPage},
     { path: 'challenges', component: ChallengesComponent },

@@ -31,7 +31,14 @@ export class StravaService {
 
   authUser(user:userStrava) {
     this.sessionService.user=user;
-    this.router.navigate(['/home']);
+    if(localStorage.getItem('url')){
+      const url=localStorage.getItem('url');
+      localStorage.removeItem('url');
+      this.router.navigate([url]);
+    }else{
+      this.router.navigate(['/home']);
+    }
+    
   }
 
   logout(){
