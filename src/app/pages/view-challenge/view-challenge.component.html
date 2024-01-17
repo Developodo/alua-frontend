@@ -24,11 +24,22 @@
                     Deportistas Inscritos: {{challenge.athletes?challenge.athletes?.length:0}}
                 </mat-panel-title>
               </mat-expansion-panel-header>
-           <ul>
+           
             @for(a of challenge.athletes;track a.id;let i=$index) {
-             <li>{{a.firstname}}</li>
+              <mat-card>
+              <mat-card-header>
+                <div mat-card-avatar [style.background-image]="'url(' + a.profile + ')'" style="background-size: cover;"></div>
+                <mat-card-title style="color:white">
+                  {{a.name}}     
+                </mat-card-title>
+              </mat-card-header>
+            </mat-card>
           }
-        </ul>
+       
+
+
+
+
         </mat-expansion-panel>
           </mat-accordion>
           @if(this.session.isAdmin()){
