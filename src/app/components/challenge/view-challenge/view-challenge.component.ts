@@ -46,9 +46,7 @@ export class ViewChallengeComponent implements OnChanges{
     window.location.href=`https://www.strava.com/segments/${id}`
   }
 
-  viewClub(
-  ){
-    
+  viewClub(){
     window.location.href=`https://www.strava.com/clubs/${this.challenge.club?.id}`;
   }
 }

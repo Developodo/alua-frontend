@@ -363,10 +363,9 @@ export class ChallengesComponent implements OnInit, AfterViewInit {
       ...c,
       loaded:false
     }))
-    let veryFirstMoment=this.myForm?.controls?.duration?.value?.start;
+   
     let veryLastMoment=this.myForm?.controls?.duration?.value?.end;
-    if(this.myForm?.controls?.duration?.value.start)
-      veryFirstMoment =new Date(this.myForm?.controls?.duration?.value?.start.setUTCHours(1,0,0));
+
     if(this.myForm?.controls?.duration?.value.end)
       veryLastMoment = new Date(this.myForm?.controls?.duration?.value?.end.setUTCHours(23,0,0));
     const request = {
@@ -378,7 +377,7 @@ export class ChallengesComponent implements OnInit, AfterViewInit {
       club: this.club().clubselected,
       type: this.club().clubselected?.sport_type,
       stages: this.segment().segments_selected_detailed,
-      start_date_local: veryFirstMoment,
+      start_date_local: this.myForm?.controls?.duration?.value?.start,
       end_date_local: veryLastMoment
     };
     console.log(request);
