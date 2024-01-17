@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" style="background-color: #e91e63">
 
-    <span style="cursor:pointer" [routerLink]="'/home/url='+this.router.url"><div style="display:inline;font-family: Quantum;font-size: xxx-large;margin-top: 40px;">AluA</div></span>
+    <span style="cursor:pointer" [routerLink]="'/home'"><div style="display:inline;font-family: Quantum;font-size: xxx-large;margin-top: 40px;">AluA</div></span>
     <span class="example-spacer"></span>
    <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>favorite</mat-icon>
@@ -33,7 +33,7 @@
         </button>
        </mat-menu>
     }@else{
-      <a mat-button [routerLink]="['/login']">Iniciar Sesión</a>
+      <a mat-button [routerLink]="['/login/url='+this.router.url]">Iniciar Sesión</a>
     }
       
       
