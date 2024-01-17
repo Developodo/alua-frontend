@@ -26,7 +26,7 @@
               </mat-expansion-panel-header>
            
             @for(a of challenge.athletes;track a.id;let i=$index) {
-              <mat-card>
+              <mat-card style="cursor:pointer" (click)="viewAthlete(a.id)">
               <mat-card-header>
                 <div mat-card-avatar [style.background-image]="'url(' + a.profile + ')'" style="background-size: cover;"></div>
                 <mat-card-title style="color:white">

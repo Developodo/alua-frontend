@@ -122,4 +122,8 @@ export class ViewChallengeComponentPage{
 
     
   }
+
+  viewAthlete(id:number){
+    window.location.href=`https://www.strava.com/athletes/${id}`;
+  }
 }
