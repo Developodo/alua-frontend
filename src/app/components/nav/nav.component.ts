@@ -68,4 +68,9 @@ export class NavComponent {
       this.router.navigate(['/home']);
     }
   }
+
+  public login(){
+    localStorage.setItem('url', this.router.url);
+    this.router.navigate(['/login']);
+  }
 }
