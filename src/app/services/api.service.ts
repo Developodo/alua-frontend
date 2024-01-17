@@ -3,12 +3,13 @@ import { mockStrava } from '../mock/mockStrava';
 import { mockApi } from '../mock/mockApi';
 import { HttpClient } from '@angular/common/http';
 import { LocalSessionService } from './local-session.service';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-   apiURL="https://alua-backend.vercel.app/";
+   apiURL=environment.urlApi;
   session = inject(LocalSessionService);
 
   constructor(private http: HttpClient) { }

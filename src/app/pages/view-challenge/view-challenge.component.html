@@ -23,13 +23,13 @@
                 <mat-panel-title>
                     Deportistas Inscritos: {{challenge.athletes?challenge.athletes?.length:0}}
                 </mat-panel-title>
-                <mat-panel-description>
-                    @for(a of challenge.athletes;track a.id;let i=$index) {
-                        {{a.firstname}}
-                    }
-                </mat-panel-description>
               </mat-expansion-panel-header>
-            </mat-expansion-panel>
+           <ul>
+            @for(a of challenge.athletes;track a.id;let i=$index) {
+             <li>{{a.firstname}}</li>
+          }
+        </ul>
+        </mat-expansion-panel>
           </mat-accordion>
           @if(this.session.isAdmin()){
             <mat-icon style="cursor:pointer;color:white;scale: 1.2em;" (click)="deleteChallenge()">delete</mat-icon>

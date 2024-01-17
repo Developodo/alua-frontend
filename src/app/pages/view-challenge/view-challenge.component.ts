@@ -56,7 +56,7 @@ export class ViewChallengeComponentPage{
       //fuegos artificiales
       this.api.subscribeChallenge(Number(this.id)).subscribe((d:any)=>console.log(d));
       /*buscar this.session.user.athlete.id en this.challenge.athletes*/
-      if(!this.found)
+      if(!this.found || this.found.length==0)
         this.challenge.athletes?.push(this.session.user?.athlete as any);
       
       try {
