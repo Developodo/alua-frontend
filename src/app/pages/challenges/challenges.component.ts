@@ -366,9 +366,9 @@ export class ChallengesComponent implements OnInit, AfterViewInit {
     let veryFirstMoment=this.myForm?.controls?.duration?.value?.start;
     let veryLastMoment=this.myForm?.controls?.duration?.value?.end;
     if(this.myForm?.controls?.duration?.value.start)
-      veryFirstMoment =new Date(this.myForm?.controls?.duration?.value?.start.setUTCHours(0,0,0));
+      veryFirstMoment =new Date(this.myForm?.controls?.duration?.value?.start.setUTCHours(1,0,0));
     if(this.myForm?.controls?.duration?.value.end)
-      veryLastMoment = new Date(this.myForm?.controls?.duration?.value?.end.setUTCHours(23,59,59));
+      veryLastMoment = new Date(this.myForm?.controls?.duration?.value?.end.setUTCHours(23,0,0));
     const request = {
       name: this.myForm?.controls?.name?.value,
       distance: this.segment().distance,

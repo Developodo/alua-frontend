@@ -32,7 +32,7 @@ export class ApiService {
     const body = {
       name: challenge.name
       ,description:challenge.description
-      ,image:challenge.image?challenge.image:'/assets/imageD.jpeg'
+      ,image:challenge.image
       ,total_elevation_gain:challenge.total_elevation_gain
       ,club:challenge.club
       ,type:challenge.type
