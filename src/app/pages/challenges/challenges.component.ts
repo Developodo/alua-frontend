@@ -370,7 +370,7 @@ export class ChallengesComponent implements OnInit, AfterViewInit {
     const request = {
       name: this.myForm?.controls?.name?.value,
       distance: this.segment().distance,
-      image: this.image().image,
+      image: this.image().image==null?'/assets/imageD.jpeg':this.image().image,
       total_elevation_gain: this.segment().segments_selected_detailed.map((s:any)=>s.total_elevation_gain).reduce((a:any,b:any)=>a+b,0),
       description: this.myForm?.controls?.description?.value,
       club: this.club().clubselected,
