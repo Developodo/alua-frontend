@@ -30,7 +30,10 @@ export class StravaService {
   }
 
   authUser(user:userStrava) {
+    console.log("OLEEE")
     this.getClubs().subscribe(d=>{
+      console.log("------------")
+      console.log(d)
       user.athlete.clubs=d as any;
       this.sessionService.user=user;
     if(localStorage.getItem('url')){
