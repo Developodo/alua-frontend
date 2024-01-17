@@ -365,7 +365,6 @@ export class ChallengesComponent implements OnInit, AfterViewInit {
     }))
    
     let veryLastMoment=this.myForm?.controls?.duration?.value?.end;
-
     if(this.myForm?.controls?.duration?.value.end)
       veryLastMoment = new Date(this.myForm?.controls?.duration?.value?.end.setUTCHours(23,0,0));
     const request = {
