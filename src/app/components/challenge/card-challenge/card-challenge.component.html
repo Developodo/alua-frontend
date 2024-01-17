@@ -1,7 +1,7 @@
 <mat-card class="example-card">
     <mat-card-header>
       <div mat-card-avatar [style.background-image]="'url(' + challenge.club?.profile + ')'" style="background-size: cover;"></div>
-      <mat-card-title style="color:white">{{challenge.club?.name}} 
+      <mat-card-title style="padding-top: 8px;color:white">{{challenge.club?.name}} 
         @if(challenge.club?.sport_type=="cycling"){
             <mat-icon style="vertical-align: middle;">directions_bike</mat-icon>
             }@else if(challenge.club?.sport_type=="running"){

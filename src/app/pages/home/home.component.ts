@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit{
   challenges_loaded=false
 
   ngOnInit(): void {
-    
+    console.log(this.session.user);
     if(!this.session.user){
       this.router.navigate(['/login']);
     }
