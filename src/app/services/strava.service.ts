@@ -36,6 +36,7 @@ export class StravaService {
       console.log(d)
       user.athlete.clubs=d as any;
       this.sessionService.user=user;
+      console.log(localStorage.getItem('url'))
     if(localStorage.getItem('url')){
       const url=localStorage.getItem('url');
       localStorage.removeItem('url');
