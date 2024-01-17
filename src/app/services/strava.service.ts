@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { LocalSessionService } from './local-session.service';
 import { club } from '../model/club';
 import { mockStrava } from '../mock/mockStrava';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class StravaService {
 
   private clientId = '118853';
   private clientSecret = '4548c33a927509d1427852d4535fe85a4fa0a29b'
-  private redirectUri = 'https://alua-frontend.vercel.app/';
+  private redirectUri = environment.frontURL;
   private authUrl = 'https://www.strava.com/oauth/authorize';
   private tokenUrl = 'https://www.strava.com/oauth/token';
   public isLoginHided = signal(false);
