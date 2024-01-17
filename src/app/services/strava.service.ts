@@ -30,7 +30,9 @@ export class StravaService {
   }
 
   authUser(user:userStrava) {
-    this.sessionService.user=user;
+    this.getClubs().subscribe(d=>{
+      user.athlete.clubs=d as any;
+      this.sessionService.user=user;
     if(localStorage.getItem('url')){
       const url=localStorage.getItem('url');
       localStorage.removeItem('url');
@@ -38,6 +40,9 @@ export class StravaService {
     }else{
       this.router.navigate(['/home']);
     }
+    });
+
+    
     
   }
 

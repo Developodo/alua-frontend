@@ -21,6 +21,7 @@ export interface userStrava {
         updated_at?:string,
         username?:string,
         weight?:number
+        clubs?:any
     },
     expires_at:number,
     expires_in:number,
