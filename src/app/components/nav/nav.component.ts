@@ -70,8 +70,9 @@ export class NavComponent {
   }
 
   public login(){
-    console.log("LOGIN")
+    console.log(window.location.href)
     localStorage.setItem('url', window.location.href);
+    console.log(localStorage.getItem('url'));
     this.router.navigate(['/login']);
   }
 }
