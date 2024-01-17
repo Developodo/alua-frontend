@@ -1,0 +1,32 @@
+<mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar [style.background-image]="'url(' + challenge.club?.profile + ')'" style="background-size: cover;"></div>
+      <mat-card-title style="color:white">{{challenge.club?.name}} 
+        @if(challenge.club?.sport_type=="cycling"){
+            <mat-icon style="vertical-align: middle;">directions_bike</mat-icon>
+            }@else if(challenge.club?.sport_type=="running"){
+            <mat-icon style="vertical-align: middle;">directions_run</mat-icon>
+            }@else {
+            <mat-icon style="vertical-align: middle;">sport</mat-icon>
+            }
+            
+    </mat-card-title>
+    </mat-card-header>
+    <label style="text-align:center;color:white;font-family: Quantum;position:relative;z-index:9998;margin-bottom:-2rem;font-size: 2rem;background-color: rgba(0, 0, 0, 0.5);padding:5px">
+        {{challenge.name}}
+    </label>
+    <img [style.filter]="challenge.end_date_local<today? 'grayscale(100%)':''" style="width:100%" mat-card-image [src]="challenge.image?challenge.image:'/assets/imageD.jpeg'" alt="Photo of a Shiba Inu">
+    <label style="font-family: Quantum;color:white;padding-left:8px;text-align:right;font-size: 1.25rem;position:relative;top:-2rem;background-color:rgb(0,0,0,0.5);padding:5px">
+        <mat-icon fontIcon="event" style="vertical-align: middle;"></mat-icon>
+
+        @if(challenge.start_date_local==challenge.end_date_local){
+            {{challenge.start_date_local | date: 'dd/MM/yyyy'}} 
+        }@else {
+            Del {{challenge.start_date_local | date: 'dd/MM/yyyy'}} al {{challenge.end_date_local | date: 'dd/MM/yyyy'}}
+        }
+        
+ 
+    </label>
+    <mat-card-content>
+    </mat-card-content>
+</mat-card>

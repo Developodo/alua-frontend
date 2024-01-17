@@ -1,0 +1,334 @@
+<mat-stepper linear #stepper>
+  <mat-step [stepControl]="myForm" [editable]="'false'">
+    <div>
+      <button style="opacity: 0 !important;" mat-fab matStepperPrevious><mat-icon>navigate_before</mat-icon></button>
+  <button
+  mat-fab
+  color="primary"
+  (click)="saveChallenge_step1()"
+  [disabled]="!this.myForm.valid"
+  [ngClass]="{'fab': true, 'ready': this.myForm.valid }"
+  matStepperNext
+>
+<mat-icon>navigate_next</mat-icon>
+</button>
+    </div>
+<form class="example-form" [formGroup]="myForm">
+  
+  <ng-template matStepLabel><mat-icon>description</mat-icon></ng-template>
+  <div class="one-row">
+    <mat-form-field class="responsive">
+      <mat-label>Nombre del reto</mat-label>
+      <input matInput placeholder="Tiñosing" value="" formControlName="name"/>
+    </mat-form-field>
+
+    <mat-form-field class="responsive">
+      <mat-label>Duración</mat-label>
+      <mat-date-range-input
+        formGroupName="duration"
+        [rangePicker]="campaignOnePicker"
+        [comparisonStart]="myForm.controls.duration.value.start"
+        [comparisonEnd]="myForm.controls.duration.value.end"
+        
+      >
+        <input matStartDate placeholder="Inicio" formControlName="start" />
+        <input matEndDate placeholder="Final" formControlName="end" />
+      </mat-date-range-input>
+      <mat-hint style="color:gray">DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="campaignOnePicker"
+      ></mat-datepicker-toggle>
+      <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+    </mat-form-field>
+  </div>
+  <div style="margin-bottom: 10px; width: 100%">
+    @if(this.image().status==1){
+
+    <button
+      style="width: 100%"
+      mat-raised-button
+      color="primary"
+      (click)="fileInput.click()"
+    >
+      <mat-icon>attach_file</mat-icon>
+      Imagen para el reto
+    </button>
+    <input
+      hidden
+      (change)="fileChangeEvent($event)"
+      #fileInput
+      type="file"
+      id="file"
+    />
+    } @if(this.image().status<4){
+    <image-cropper
+      [imageChangedEvent]="this.image().imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="16 / 9"
+      [output]="'base64'"
+      [imageQuality]="70"
+      [autoCrop]="true"
+      [allowMoveImage]="false"
+      format="jpeg"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded($event)"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+      [style.height]="this.image().status<2?'0px':'auto'"
+
+    ></image-cropper>
+    } @if(this.image().status==3){
+    <div class="one-row-always">
+      <button
+        style="width: 40%"
+        mat-raised-button
+        color="danger"
+        (click)="cancelcropping()"
+      >
+        <mat-icon>cancel</mat-icon>
+        Cancelar
+      </button>
+      <button
+        style="width: 40%"
+        mat-raised-button
+        color="primary"
+        (click)="crop()"
+      >
+        <mat-icon>check_circle</mat-icon>
+        Insertar
+      </button>
+    </div>
+    } @if(this.image().status==2){
+    <mat-progress-bar
+      class="example-margin"
+      color="primary"
+      mode="indeterminate"
+    >
+    </mat-progress-bar>
+    } 
+    @if(this.image().status==4){
+    <div class="container">
+      <div href="#" class="remove-image" (click)="removeImage()">
+        <mat-icon style="transform: scale(2)">cancel</mat-icon>
+      </div>
+      <img [src]="this.image().croppedImage" style="width: 100%" />
+    </div>
+    }
+  </div>
+  <mat-form-field class="example-full-width">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput placeholder="De qué se trata" formControlName="description"></textarea>
+  </mat-form-field>
+
+ 
+  <mat-form-field class="example-full-width">
+    
+    <mat-label>Grupo</mat-label>
+    <mat-select
+      formControlName="club"
+      (selectionChange)="selectClub($event.value)"
+    >
+      @for(club of this.club().clubs ; track club.id){
+      <mat-option [value]="club.id">
+        <img class="avatar" [src]="club.profile_medium" />
+        {{ club.name }}
+        @if(club.sport_type=="cycling"){
+        <mat-icon>directions_bike</mat-icon>
+        }@else if(club.sport_type=="running"){
+        <mat-icon>directions_run</mat-icon>
+        }@else {
+        <mat-icon>sport</mat-icon>
+        }
+      </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  @if(!this.club().clubsLoaded){
+    <mat-progress-bar
+    class="example-margin"
+    color="primary"
+    mode="indeterminate"
+    style="margin-top:-20px"
+  ></mat-progress-bar>
+  }
+ 
+
+  @if(this.club().clubselected){
+  <mat-card class="example-card">
+    <mat-card-header style="padding: 10px">
+      <mat-card-subtitle>
+        <img class="avatar" [src]="this.club().clubselected?.profile_medium" />
+        {{ this.club().clubselected?.name }}
+        @if(this.club().clubselected?.sport_type=="cycling"){
+        <mat-icon>directions_bike</mat-icon>
+        }@else if(this.club().clubselected?.sport_type=="running"){
+        <mat-icon>directions_run</mat-icon>
+        }@else {
+        <mat-icon>sport</mat-icon>
+        }
+      </mat-card-subtitle>
+    </mat-card-header>
+    @if(this.club().clubselected?.cover_photo){
+    <img
+      mat-card-image
+      [src]="this.club().clubselected?.cover_photo"
+      alt="Portada del Club"
+    />
+    }@else{
+    <img
+      mat-card-image
+      [src]="this.club().clubselected?.profile"
+      alt="Portada del Club"
+    />
+    }
+  </mat-card>
+  }
+
+
+</form>
+
+
+
+</mat-step>
+
+<mat-step>
+  <div>
+    <button style="opacity:0 !important" mat-fab matStepperPrevious><mat-icon>navigate_before</mat-icon></button>
+<button
+mat-fab
+color="primary"
+(click)="saveChallenge_step2()"
+[disabled]="!this.myForm.valid || !this.segment().segments_selected.length"
+[ngClass]="{'fab': true, 'ready': this.myForm.valid && this.segment().segments_selected.length }"
+matStepperNext
+>
+<mat-icon>navigate_next</mat-icon>
+</button>
+  </div>
+  <ng-template matStepLabel><mat-icon>query_stats</mat-icon></ng-template>
+
+ 
+@defer (when segment().segments_loaded) {
+  <h2 style="color:white">Etapas del reto: {{this.segment().segments_selected.length}} de {{this.segment().segments.length}} Segmentos <span style="color:gray">({{this.segment().distance | km}})</span></h2>
+  <mat-form-field appearance="outline" class="example-full-width">
+    <input type="search" matInput placeholder="Búsqueda"  (input)="onSearch($event)">
+    <mat-icon style="color:white" matSuffix>search</mat-icon>
+  </mat-form-field>
+  <mat-selection-list #segments (selectionChange)="selectSegment($event)">
+    @for (s of segment().segments_filtered; track s.id) {
+      <mat-list-option [value]="s">
+        <mat-label> {{s.name}} ({{s.distance | km}})</mat-label>      
+      </mat-list-option>
+    }
+    @empty {
+  There were no items in the list.
+  }
+  </mat-selection-list>
+  @if(segment().segments_more) {
+    <button
+      style="width: 100%"
+      mat-raised-button
+      color="primary"
+      (click)="loadStarredSegments()"
+    >
+      <mat-icon>load</mat-icon>
+      Cargar más segmentos
+    </button>
+  }
+    
+  
+} @placeholder {
+  <mat-progress-bar
+  class="example-margin"
+  color="primary"
+  mode="indeterminate"
+>
+</mat-progress-bar>
+}
+  
+</mat-step>
+
+
+<mat-step>
+  <div>
+    <button mat-fab matStepperPrevious><mat-icon>navigate_before</mat-icon></button>
+<button
+mat-fab
+color="primary"
+(click)="saveChallenge_step3()"
+[disabled]="!this.myForm.valid || !this.segment().segments_selected.length"
+[ngClass]="{'fab': true, 'ready': this.myForm.valid && this.segment().segments_selected.length }"
+matStepperNext
+>
+<mat-icon>navigate_next</mat-icon>
+</button>
+  </div>
+  <ng-template matStepLabel><mat-icon>route</mat-icon></ng-template>
+
+ <!--on viewport;-->
+@defer ( when segment().segments_selected_loaded) {
+  <h2 style="color:white">Etapas del reto: {{this.segment().segments_selected.length}}<span style="color:gray"> ({{this.segment().distance | km}})</span></h2>
+  
+  <p>
+    @for (s of segment().segments_selected_detailed; track s.id;let i=$index) {
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title style="color:white">#{{ i+1 }} {{s.name}}</mat-card-title>
+          <mat-card-subtitle style="margin-bottom: 7px;"><mat-icon style="vertical-align: middle;">straighten</mat-icon> {{s.distance | km}}  <mat-icon style="vertical-align: middle;">trending_up</mat-icon> {{s.total_elevation_gain}}m
+          <mat-icon style="vertical-align: middle;position: absolute; right: 20px;cursor:pointer;scale: 1.5;color:#c2185b" (click)="visitStrava(s.id)">visibility</mat-icon>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <app-map [route]="s['map']['polyline']" [start]="s['start_latlng']" [end]="s['end_latlng']"></app-map>
+        </mat-card-content>
+        <mat-card-actions>
+          <mat-slide-toggle
+          class="example-margin"
+          [(ngModel)]="s['anydate']">
+        En cualquier día del reto
+      </mat-slide-toggle>
+          <mat-form-field class="example-full-width">
+            <mat-label>Elije fecha para el segmento</mat-label>
+            <input [disabled]="s['anydate']" matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker" [(ngModel)]="s['date']=myForm.controls.duration.value.start">
+            <mat-hint style="color:gray">DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </mat-card-actions>
+      </mat-card>
+
+  
+     
+    }
+  <p>
+    
+} @placeholder {
+  <mat-progress-bar
+  class="example-margin"
+  color="primary"
+  mode="indeterminate"
+>
+</mat-progress-bar>
+}
+  
+</mat-step>
+
+<mat-step>
+  <ng-template matStepLabel><mat-icon>check</mat-icon></ng-template>
+
+@defer (when challenge().loaded) {
+  <app-view-challenge [challenge]="challenge()"></app-view-challenge>
+} @placeholder {
+  <mat-progress-bar
+  class="example-margin"
+  color="primary"
+  mode="indeterminate"
+>
+</mat-progress-bar>
+} @error {
+  <div>ERROR</div>
+}
+
+</mat-step>
+</mat-stepper>

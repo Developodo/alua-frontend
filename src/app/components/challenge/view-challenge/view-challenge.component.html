@@ -1,0 +1,92 @@
+<button
+            mat-fab
+            [matMenuTriggerFor]="menu"
+            color="primary"
+            style="
+            z-index:9999;
+            position: absolute;
+    right: 0;
+    margin-right: 5px;
+    margin-top: -5px;
+            "
+          >
+          <mat-icon>share</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu"  yPosition="above" >
+            
+            <share-buttons [theme]="'circles-dark'"
+            [include]="['twitter','telegram','whatsapp','copy']"
+            [show]="5"
+            [title]="challenge.name"
+            [url]="'https://stravaly.com/challenge/'+challenge.id"
+            [description]="challenge.description"
+            [image]="challenge.image?challenge.image:'/assets/imageD.jpeg'"
+            [autoSetMeta]="true"
+           ></share-buttons>
+
+          </mat-menu>
+<mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar [style.background-image]="'url(' + challenge.club?.profile + ')'" style="background-size: cover;"></div>
+      <mat-card-title style="color:white">{{challenge.club?.name}} 
+        @if(challenge.club?.sport_type=="cycling"){
+            <mat-icon style="vertical-align: middle;">directions_bike</mat-icon>
+            }@else if(challenge.club?.sport_type=="running"){
+            <mat-icon style="vertical-align: middle;">directions_run</mat-icon>
+            }@else {
+            <mat-icon style="vertical-align: middle;">sport</mat-icon>
+            }
+            
+    </mat-card-title>
+    </mat-card-header>
+    <label style="text-align:center;color:white;font-family: Quantum;position:relative;z-index:9998;margin-bottom:-2rem;font-size: 2rem;background-color: rgba(0, 0, 0, 0.5);padding:5px">
+        {{challenge.name}}
+    </label>
+    <img mat-card-image [src]="challenge.image?challenge.image:'/assets/imageD.jpeg'" alt="Photo of a Shiba Inu">
+    <label style="font-family: Quantum;color:white;padding-left:8px;text-align:right;font-size: 1.25rem;position:relative;top:-2rem;background-color:rgb(0,0,0,0.5);padding:5px">
+        <mat-icon fontIcon="event" style="vertical-align: middle;"></mat-icon>
+
+        @if(challenge.start_date_local==challenge.end_date_local){
+            {{challenge.start_date_local | date: 'dd/MM/yyyy'}} 
+        }@else {
+            Del {{challenge.start_date_local | date: 'dd/MM/yyyy'}} al {{challenge.end_date_local | date: 'dd/MM/yyyy'}}
+        }
+        
+ 
+    </label>
+    <mat-card-content>
+       
+        <p style="color:white;font-size: 1.1rem;">
+            {{challenge.description}}
+        </p>
+
+@for (s of challenge.stages; track s.id;let i=$index) {
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title style="color:white">#{{ i+1 }} {{s.name}}</mat-card-title>
+        <mat-card-subtitle style="margin-bottom: 7px;"><mat-icon style="vertical-align: middle;">straighten</mat-icon> {{s.distance | km}}  <mat-icon style="vertical-align: middle;">trending_up</mat-icon> {{s.total_elevation_gain}}m
+        <mat-icon style="vertical-align: middle;position: absolute; right: 20px;cursor:pointer;scale: 1.5;color:#c2185b" (click)="visitStrava(s.id)">visibility</mat-icon>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <app-map [route]="s['map']['polyline']" [start]="s['start_latlng']" [end]="s['end_latlng']"></app-map>
+      </mat-card-content>
+      <mat-card-actions>
+        <label style="color:white;padding-left:8px">
+            <mat-icon fontIcon="event" style="vertical-align: middle;"></mat-icon>
+
+        @if(s['anydate']){
+            Este segmento puede hacer cualquier día dentro del plazo del reto
+        }@else{
+            {{s['date'] | date: 'dd/MM/yyyy'}}
+        }
+    </label>
+      </mat-card-actions>
+    </mat-card>
+
+
+   
+  }
+
+</mat-card-content>
+</mat-card>

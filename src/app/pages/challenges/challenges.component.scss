@@ -1,0 +1,168 @@
+.mat-step-header {
+  pointer-events: none;
+}
+.example-form {
+    margin:20px;
+    padding:10px;
+    min-width: 150px;
+    max-width: 90%;
+    width: 90%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  .one-row-always{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .one-row{
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100%;
+    flex-wrap: wrap;
+    .responsive{
+      flex:1 1 0;
+    }
+  }
+  @media only screen and (max-width: 800px) {
+    .one-row {
+      flex-direction: column;
+      .responsive{
+        width: 100%;
+      }
+    }
+  }
+  .avatar{
+    height: 24px;
+    border-radius: 100%;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  .example-card {
+    max-width: 100%;
+  }
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+
+  .remove-image {
+    position: absolute;
+    right:0;
+    top:10px;
+    color: #c2185b;
+    font-size: 40px;
+    cursor: pointer;
+    border-radius: 10rem;
+    opacity: 0.7;
+    background-color: transparent;
+    border: transparent;
+    }
+    
+    .remove-image:hover {
+    opacity: 1;
+    }
+  .fa-heart {
+    position: absolute;
+    z-index: 2;
+    color: #c2185b;
+}
+.container {
+  position: relative;
+  width: 100%;
+}
+
+
+
+
+
+.segments-container {
+  width:100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100%;
+    flex-wrap: wrap;
+
+  .segments-list-contaner{
+    display: inline-block;
+    flex:1 1 0;
+  }
+}
+
+
+
+.example-list {
+  border: solid 1px #424242;
+  min-height: 60px;
+  background: #424242;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.example-box {
+  padding: 20px 10px;
+  border-bottom: solid 1px #e91e63;
+  color: #424242;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: #c7c7c7;
+  font-size: 14px;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+
+
+image-cropper{
+  --cropper-overlay-color: rgba(0, 0, 0, 0);
+}
+.fab{
+  position: absolute;
+  z-index: 9999;
+  opacity: 0.80;
+  right:40px;
+}
+.ready{
+  opacity: 1 !important;
+  transform: scale(1.5) !important;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}

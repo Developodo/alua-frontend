@@ -1,0 +1,44 @@
+<mat-toolbar color="primary" style="background-color: #e91e63">
+
+    <span style="cursor:pointer" routerLink="/home"><img src="assets/icons/aluas.svg" class="logo"></span>
+    <span class="example-spacer"></span>
+   <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>-->
+    @if(session.isAdmin() && root=="false"){
+      <button mat-icon-button aria-label="Admin mode" (click)="admin()">
+      <mat-icon>admin_panel_settings</mat-icon>
+    </button>
+    }   
+    @if(root=="true"){
+        <button mat-icon-button aria-label="Admin mode" (click)="home()">
+        <mat-icon>home</mat-icon>
+      </button>
+      }  
+    @if(this.athlete){
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="goToProfile()">
+          <img class="avatar" [src]="athlete?.profile_medium">
+          <span>{{athlete?.firstname}}</span>
+        </button>
+  
+        
+  
+        <button mat-menu-item (click)="logout()">
+          <mat-icon style="margin-left: 16px;margin-right: 16px;">logout</mat-icon>
+          <span>Salir</span>
+        </button>
+       </mat-menu>
+    }@else{
+      <a mat-button [routerLink]="['/login']">Iniciar Sesión</a>
+    }
+      
+      
+    
+
+    
+   
+  </mat-toolbar>

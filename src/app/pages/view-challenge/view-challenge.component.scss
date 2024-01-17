@@ -1,0 +1,27 @@
+.example-h2 {
+    margin: 10px;
+  }
+  //se alinean horizontalmente ocupando todo el ancho
+  .example-section {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    position: relative;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: content-box;
+
+
+  }
+  
+  .example-margin {
+    margin: 10px;
+  }

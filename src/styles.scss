@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'ngx-sharebuttons/themes/default';
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+a.leaflet-control-fullscreen-button{
+    background-image: url(/assets/icons/fullscreen.svg);
+  }
+
+  @font-face {
+    font-family: Quantum;
+    src: url(/assets/fonts/Quantum.otf) format("opentype");
+  }
+
+  ::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
+.mat-step-header {
+  pointer-events: none;
+}
+mat-step-header {
+  pointer-events: none;
+}
+
+
+
+

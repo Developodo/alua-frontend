@@ -1,0 +1,6 @@
+<div class="map-container"
+  leaflet
+  (leafletMapReady)="onMapReady($event)"
+  (leafletClick)="mapClicked($event)">
+  <mat-icon [style.color]="this.modeSatellite ? 'rgba(64, 128, 206, 0.796)' : 'rgba(35, 45, 57, 0.796)'" (click)="changeModeSatelite($event)" class="satelite" aria-hidden="false" aria-label="" fontIcon="public"></mat-icon>
+</div>

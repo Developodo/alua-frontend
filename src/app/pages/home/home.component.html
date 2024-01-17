@@ -1,0 +1,17 @@
+<app-nav></app-nav>
+<div class="container">
+@defer(when challenges_loaded) {
+    @for(challenge of challenges; track challenge.id) {
+        <app-card-challenge class="item" [challenge]="challenge" (click)="viewChallenge(challenge.id)"></app-card-challenge>
+    }
+}@placeholder{
+    <mat-progress-bar
+class="example-margin"
+color="primary"
+mode="indeterminate"
+>
+</mat-progress-bar>
+} @error {
+<div>ERROR</div>
+}
+</div>

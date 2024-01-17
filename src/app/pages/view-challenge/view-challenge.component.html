@@ -1,0 +1,51 @@
+<app-nav></app-nav>
+@defer (when loaded) {
+<mat-card class="result" *ngIf="loaded">
+    <mat-card-content>
+      <section class="example-section">
+ 
+        <mat-slide-toggle
+            class="example-margin example-half-width"
+            [checked]="found && found.length>0"
+            [disabled]="!this.session.user || challenge.end_date_local<today"
+            (change)="subscription($event)"
+            >
+          @if(found && found.length>0){
+                Inscrito!
+          }@else{
+                No estás inscrito
+          }
+           
+        </mat-slide-toggle>
+        <mat-accordion>
+            <mat-expansion-panel [disabled]="!challenge?.athletes || challenge?.athletes?.length==0">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Deportistas Inscritos: {{challenge.athletes?challenge.athletes?.length:0}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    @for(a of challenge.athletes;track a.id;let i=$index) {
+                        {{a.firstname}}
+                    }
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+          </mat-accordion>
+          @if(this.session.isAdmin()){
+            <mat-icon style="cursor:pointer;color:white;scale: 1.2em;" (click)="deleteChallenge()">delete</mat-icon>
+          }
+      </section>
+    </mat-card-content>
+  </mat-card>
+
+    <app-view-challenge [challenge]="challenge"></app-view-challenge>
+  } @placeholder {
+    <mat-progress-bar
+    class="example-margin"
+    color="primary"
+    mode="indeterminate"
+  >
+  </mat-progress-bar>
+  } @error {
+    <div>ERROR</div>
+  }
