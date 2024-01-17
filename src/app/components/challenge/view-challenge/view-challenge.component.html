@@ -26,7 +26,7 @@
 
           </mat-menu>
 <mat-card class="example-card" >
-    <mat-card-header>
+    <mat-card-header style="cursor:pointer" (click)="viewClub(challenge.club?.id)">
       <div mat-card-avatar [style.background-image]="'url(' + challenge.club?.profile + ')'" style="background-size: cover;"></div>
       <mat-card-title style="color:white">{{challenge.club?.name}} 
         @if(challenge.club?.sport_type=="cycling"){
