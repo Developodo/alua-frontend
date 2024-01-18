@@ -6,7 +6,7 @@ import { userStrava } from '../model/userStrava';
 })
 export class LocalSessionService {
   private _user:WritableSignal<userStrava | null> = signal(null);
-  private _admin = computed(() => this.user?.athlete?.id==1304824?true : false);
+  private _admin = computed(() => (this.user?.athlete?.id==1304824 || this.user?.athlete?.id==313764)?true : false);
   loaded=false;
   constructor() { }
 
