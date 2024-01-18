@@ -65,6 +65,7 @@ export class HomeComponent implements OnInit{
       this.api.getChallengesByClubs(ids,this.challenges_page).subscribe((r:any)=>{
         if(r.length==0){
           this.challenges_has_more=false;
+          this.challenges_loaded=true;
         }else{
           this.challenges=[...this.challenges,...r];
           this.challenges_loaded=true;
