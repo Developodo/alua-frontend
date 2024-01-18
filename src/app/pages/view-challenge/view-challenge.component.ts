@@ -15,6 +15,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmComponent } from '../../components/confirm/confirm.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RedirecService } from '../../services/redirec.service';
+import { lastValueFrom } from 'rxjs';
+import { StravaService } from '../../services/strava.service';
 
 
 
@@ -32,6 +34,9 @@ export class ViewChallengeComponentPage{
   router=inject(Router);
   _snackBar = inject(MatSnackBar);
   redirect=inject(RedirecService)
+  strava=inject(StravaService);
+
+  subscribing=false;
   
   @Input() id = '';
   api = inject(ApiService);
@@ -56,7 +61,7 @@ export class ViewChallengeComponentPage{
       this.loaded=true;
     })
   }
-  subscription(event: any){
+  async subscription(event: any){
     if(this.challenge.end_date_local<this.today){
       return;
     }
@@ -70,17 +75,22 @@ export class ViewChallengeComponentPage{
       return;
     }
     if(event.checked){
+      //LOADINGGGGGGG
       //fuegos artificiales
-      this.api.subscribeChallenge(Number(this.id)).subscribe((d:any)=>console.log(d));
+      this.subscribing=true;
+      await lastValueFrom(this.api.subscribeChallenge(Number(this.id)));
       /*buscar this.session.user.athlete.id en this.challenge.athletes*/
       if(!this.found || this.found.length==0)
         this.challenge.athletes?.push(this.session.user?.athlete as any);
-      
+
+        const idSegments = this.challenge.stages?.map((s: any)=>s.id);
+        await this.strava.starSegments(idSegments)
+        this.subscribing=false;
       try {
         this.confetti({
-          angle: this.random(60, 120),
-          spread: this.random(10, 50),
-          particleCount: this.random(40, 50),
+          angle: this.random(40, 160),
+          spread: this.random(10, 60),
+          particleCount: this.random(80, 200),
           origin: {
               y: 0.6
           }

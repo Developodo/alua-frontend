@@ -7,6 +7,8 @@ import { LocalSessionService } from './local-session.service';
 import { club } from '../model/club';
 import { mockStrava } from '../mock/mockStrava';
 import { environment } from '../../environments/environment.development';
+import { interval, take, lastValueFrom } from 'rxjs';
+import { segment } from '../model/segment';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +27,7 @@ export class StravaService {
 
   // Redirige al usuario a la página de autorización de Strava
   login() {
-    const url = `${this.authUrl}?client_id=${this.clientId}&redirect_uri=${this.redirectUri}&response_type=code&scope=read_all,activity:read_all`;
+    const url = `${this.authUrl}?client_id=${this.clientId}&redirect_uri=${this.redirectUri}&response_type=code&scope=profile:write,read_all,activity:read_all`;
     //window.location.href = url;
 
     setTimeout( ()=> {
@@ -122,6 +124,51 @@ export class StravaService {
 
   public hideLoginPage(){
     this.isLoginHided.set(true);
+  }
+
+  public async starSegment(id:number){
+    const starredUrl = `https://www.strava.com/api/v3/segments/${id}/starred`;
+    const headers = { Authorization: `Bearer ${this.sessionService.user?.access_token}` };
+    return this.http.put(starredUrl,{}, { headers });
+  }
+
+  /**
+   * llamo a la api para aquellos segmentos del reto que no se encuentren ya starred
+   * @param segmentOfChallenge 
+   */
+  public async starSegments(idSegmentOfChallenge:number[]){
+      for(let id of idSegmentOfChallenge){
+        console.log("INTENTANDO STAR "+id);
+        let response=await lastValueFrom(await this.starSegment(id));
+        console.log(response);
+      }
+  }
+
+
+  /**
+   * Obtiene todos los segmentos favoritos realizando llamadas secuenciales a getStarredSegments 
+   * por páginas hasta que no obtenga resultados y devuelve el array de segmentso
+   */
+  public async getAllStarredSegments():Promise<segment[]>{
+    let segments:segment[]=[];
+    let page=1;
+    let isMore=true;
+    while(isMore){
+      console.log("PIDO SEGMENTOS STARRED")
+      try{
+        let newS = await lastValueFrom(this.getStarredSegments(page++)) as segment[];
+        segments=[...segments,...newS];
+        if(newS.length==0 || newS.length<30){
+          isMore=false;
+        }
+      }catch(e){
+        console.log(e);
+        isMore=false;
+      }
+    }
+    console.log(segments)
+    return segments;
+      
   }
 
 }

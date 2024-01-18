@@ -1,5 +1,6 @@
 <app-nav></app-nav>
 @defer (when loaded) {
+  @if(!subscribing){
 <mat-card class="result" *ngIf="loaded">
     <mat-card-content>
       <section class="example-section">
@@ -45,8 +46,17 @@
       </section>
     </mat-card-content>
   </mat-card>
-
+}@else {
+  <mat-progress-bar
+    class="example-margin"
+    color="primary"
+    mode="indeterminate"
+  >
+  </mat-progress-bar>
+  <div style="width:100%;align-items: center;color:white;font-size: large">Estamos preparando todo para ti</div>
+}
     <app-view-challenge [challenge]="challenge"></app-view-challenge>
+
   } @placeholder {
     <mat-progress-bar
     class="example-margin"
