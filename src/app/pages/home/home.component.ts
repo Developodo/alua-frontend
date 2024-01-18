@@ -48,10 +48,7 @@ export class HomeComponent implements OnInit{
       this.router.navigate(['/login']);
       return;
     }
-
-
-
-          this.loadChallenges();
+    this.loadChallenges();
   }
 
   viewChallenge(id:number){
@@ -63,6 +60,7 @@ export class HomeComponent implements OnInit{
     if(this.session.user && this.session.user.athlete.clubs && this.session.user.athlete.clubs.length>0){
       let ids = this.session.user.athlete.clubs.map((c:any)=>c.id).join(",")
       this.challenges_loaded=false;
+      console.log(ids,this.challenges_page)
       this.api.getChallengesByClubs(ids,this.challenges_page).subscribe((r:any)=>{
         console.log(r)
         if(r.length==0){  
