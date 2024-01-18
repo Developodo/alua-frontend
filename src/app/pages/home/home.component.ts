@@ -59,15 +59,17 @@ export class HomeComponent implements OnInit{
   }
 
   loadChallenges(){
+    console.log(this.session.user)
     if(this.session.user && this.session.user.athlete.clubs && this.session.user.athlete.clubs.length>0){
       let ids = this.session.user.athlete.clubs.map((c:any)=>c.id).join(",")
       this.challenges_loaded=false;
       this.api.getChallengesByClubs(ids,this.challenges_page).subscribe((r:any)=>{
-        if(r.length==0){  //la api trae 3 de cada grupo
+        console.log(r)
+        if(r.length==0){  
           this.challenges_has_more=false;
           this.challenges_loaded=true;
         }else{
-          this.challenges=[...this.challenges,...r];
+          this.challenges=[...this.challenges,...r];//la api trae 3 de cada grupo
           this.challenges_loaded=r.length<3?false:true;
           this.challenges_page++;
         }
