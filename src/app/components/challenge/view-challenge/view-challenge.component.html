@@ -81,6 +81,13 @@
             {{s['date'] | date: 'dd/MM/yyyy'}}
         }
     </label>
+    @if(s['reps'] && s['reps']>1){
+    <label style="color:white;padding-left:8px">
+      <mat-icon fontIcon="replay" style="vertical-align: middle;"></mat-icon>
+      {{s['reps']}} veces
+    </label>
+    }
+
       </mat-card-actions>
     </mat-card>
 

@@ -30,11 +30,6 @@ export class StravaService {
   }
 
   authUser(user:userStrava) {
-    console.log("OLEEE")
-    this.getClubs().subscribe(d=>{
-      console.log("------------")
-      console.log(d)
-      user.athlete.clubs=d as any;
       this.sessionService.user=user;
       console.log(localStorage.getItem('url'))
     if(localStorage.getItem('url')){
@@ -43,11 +38,7 @@ export class StravaService {
       this.router.navigate([url]);
     }else{
       this.router.navigate(['/home']);
-    }
-    });
-
-    
-    
+    }    
   }
 
   logout(){

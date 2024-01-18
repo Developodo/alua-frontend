@@ -86,6 +86,8 @@ export class ViewChallengeComponentPage{
           this.found=false;
           this.challenge.athletes=this.challenge.athletes?.filter((a: any)=>a.id!=this.session.user?.athlete?.id);
           this.api.unsubscribeChallenge(Number(this.id)).subscribe((d:any)=>console.log(d));
+         }else{
+           event.source.checked = true;
          }
      
         

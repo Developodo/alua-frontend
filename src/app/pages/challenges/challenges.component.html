@@ -284,18 +284,24 @@ matStepperNext
           <app-map [route]="s['map']['polyline']" [start]="s['start_latlng']" [end]="s['end_latlng']"></app-map>
         </mat-card-content>
         <mat-card-actions>
-          <mat-slide-toggle
-          class="example-margin"
-          [(ngModel)]="s['anydate']">
-        En cualquier día del reto
-      </mat-slide-toggle>
-          <mat-form-field class="example-full-width">
-            <mat-label>Elije fecha para el segmento</mat-label>
+
+      <mat-form-field style="width: 20%;padding:0 2px">
+        <mat-label>Veces</mat-label>
+        <input type="number" matInput [(ngModel)]="s['reps']">
+      </mat-form-field >
+          <mat-form-field style="width: 50%;padding:0 2px">
+            <mat-label>Día</mat-label>
             <input [disabled]="s['anydate']" matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker" [(ngModel)]="s['date']=myForm.controls.duration.value.start">
             <mat-hint style="color:gray">DD/MM/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
+  
+      <mat-button-toggle-group [(ngModel)]="s['anydate']" style="width: 30%;padding:0 2px;position: relative;
+      top: -10px;">
+        <mat-button-toggle [value]="false"> <mat-icon fontIcon="navigate_before"></mat-icon> </mat-button-toggle>
+        <mat-button-toggle [value]="true"> <mat-icon fontIcon="calendar_month"></mat-icon> </mat-button-toggle>
+      </mat-button-toggle-group>
         </mat-card-actions>
       </mat-card>
 

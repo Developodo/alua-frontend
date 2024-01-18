@@ -58,6 +58,7 @@ import { ViewChallengeComponent } from '../../components/challenge/view-challeng
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 const today = new Date();
 const month = today.getMonth();
@@ -99,7 +100,8 @@ interface status_club{
     MatListModule,
     MapComponent,
     ViewChallengeComponent,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatButtonToggleModule
   ],
   templateUrl: './challenges.component.html',
   styleUrl: './challenges.component.scss',
@@ -316,9 +318,13 @@ export class ChallengesComponent implements OnInit, AfterViewInit {
     }
     forkJoin(resquests).subscribe((d)=>{
       console.log(d);
+      const di=d.map(die=>{
+        return {...die,reps:1,anydate:false}
+      })
+
       this.segment.update((s:any)=>({
         ...s,
-        segments_selected_detailed:d,
+        segments_selected_detailed:di,
         segments_selected_loaded:true
       }))
     })

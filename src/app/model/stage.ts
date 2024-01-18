@@ -11,7 +11,8 @@ export interface stage{
     }
     type:string
     date:any,
-    anydate:any
+    anydate:any,
+    reps?:any,
 }
 
 

@@ -30,6 +30,8 @@ export class AppComponent {
           // Aquí puedes manejar la respuesta, almacenar el token, etc.
           console.log('Token response:', response);
           this.strava.authUser(response as any);
+          console.log("YAAAAAA")
+        
         });
       }
     });
