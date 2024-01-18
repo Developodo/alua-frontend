@@ -20,6 +20,7 @@ import { CardChallengeComponent } from '../../components/challenge/card-challeng
 import { MatProgressBar, MatProgressBarModule } from '@angular/material/progress-bar';
 import { challenge } from '../../model/challenge';
 import { ApiService } from '../../services/api.service';
+import { StravaService } from '../../services/strava.service';
 
 @Component({
   selector: 'app-home',
@@ -32,23 +33,41 @@ export class HomeComponent implements OnInit{
   public session = inject(LocalSessionService)
   api = inject(ApiService);
   router = inject(Router);
+  strava = inject(StravaService);
 
   challenges:challenge[]=[]
   challenges_loaded=false
 
   ngOnInit(): void {
     console.log(this.session.user);
+    console.log(localStorage.getItem('url'))
     if(!this.session.user){
       this.router.navigate(['/login']);
+      return;
     }
 
-    if(!this.challenges_loaded){
 
-      this.api.getChallenges().subscribe(response=>{
-        this.challenges=response as any;
-        this.challenges_loaded=true
+    if(this.session.user && this.session.user.athlete && !this.session.user.athlete.clubs){
+      this.strava.getClubs().subscribe(d=>{
+        this.session.user && (this.session.user.athlete.clubs=d);
+        if(!this.challenges_loaded){
+          if(this.session.user && this.session.user.athlete.clubs && this.session.user.athlete.clubs.length>0){
+            let ids = this.session.user.athlete.clubs.map((c:any)=>c.id).join(",")
+            this.api.getChallengesByClubs(ids).subscribe(response=>{
+              this.challenges=response as any;
+              this.challenges_loaded=true
+            })
+          }
+          /*this.api.getChallenges().subscribe(response=>{
+            this.challenges=response as any;
+            this.challenges_loaded=true
+          })*/
+        }
       })
     }
+    
+
+    
     
   }
 

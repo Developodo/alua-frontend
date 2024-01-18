@@ -36,14 +36,12 @@ export class ViewChallengeComponentPage{
   found:any=undefined;
 
   ngOnInit(): void {
-    console.log(this.id);
     this.api.getChallenge(Number(this.id)).subscribe((d: any) => {
       console.log(d);
       if(!Array.isArray(d.athletes)){
         d.athletes=[];
       }
       this.found =d.athletes?.filter((a: any)=>a.id==this.session.user?.athlete?.id);
-      console.log(this.found)
       this.challenge = d
       this.loaded=true;
     })

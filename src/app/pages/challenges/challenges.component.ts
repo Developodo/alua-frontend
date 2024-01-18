@@ -59,6 +59,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { LocalSessionService } from '../../services/local-session.service';
+import { userStrava } from '../../model/userStrava';
+import * as Leaflet from 'leaflet';
 
 const today = new Date();
 const month = today.getMonth();
@@ -113,6 +116,7 @@ export class ChallengesComponent implements OnInit, AfterViewInit {
   private _snackBar: MatSnackBar=inject(MatSnackBar);
   private dialog = inject(MatDialog);
   private api = inject(ApiService);
+  private session = inject(LocalSessionService)
   private dateAdapter: DateAdapter<Date> = inject(DateAdapter)
   @ViewChild(ImageCropperComponent) imageCropper!: ImageCropperComponent;
 
@@ -196,6 +200,15 @@ export class ChallengesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    if(this.session.user?.athlete.clubs && this.session.user?.athlete.clubs.length()>0){
+      this.club.update((c) => ({
+        ...c,
+        clubs: this.session.user?.athlete.clubs,
+        clubsLoaded:true
+      }))
+      return;
+    }
+    
     this.strava.getClubs().subscribe((d) => {
       this.club.update((c) => ({
         ...c,

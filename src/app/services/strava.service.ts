@@ -26,7 +26,11 @@ export class StravaService {
   // Redirige al usuario a la página de autorización de Strava
   login() {
     const url = `${this.authUrl}?client_id=${this.clientId}&redirect_uri=${this.redirectUri}&response_type=code&scope=read_all,activity:read_all`;
-    window.location.href = url;
+    //window.location.href = url;
+
+    setTimeout( ()=> {
+        location.replace(url);
+    }, 0);
   }
 
   authUser(user:userStrava) {

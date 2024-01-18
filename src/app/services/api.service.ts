@@ -62,6 +62,22 @@ export class ApiService {
     return this.http.get(segmentUrl, header);
   }
 
+  getChallengesByClubs(ids:string,page=1){
+    //return mockApi.getDetailedChallenge();
+    console.log(ids)
+    const segmentUrl = `${this.apiURL}challenges/clubs/${ids}`;
+    //const headers = { Authorization: `Bearer ${this.sessionService.user?.access_token}` };
+    const header = {};
+    return this.http.get(segmentUrl, header);
+  }
+  getChallengesByClub(id:number){
+    //return mockApi.getDetailedChallenge();
+    const segmentUrl = `${this.apiURL}challenges/clubs/${id}`;
+    //const headers = { Authorization: `Bearer ${this.sessionService.user?.access_token}` };
+    const header = {};
+    return this.http.get(segmentUrl, header);
+  }
+
   subscribeChallenge(id:number){
     //return mockApi.getDetailedChallenge();
     const segmentUrl = `${this.apiURL}challenges/subscribe/${id}`;
