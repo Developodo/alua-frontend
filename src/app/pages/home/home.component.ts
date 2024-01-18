@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit{
           this.challenges_loaded=true;
         }else{
           this.challenges=[...this.challenges,...r];
-          this.challenges_loaded=length<3?false:true;
+          this.challenges_loaded=r.length<3?false:true;
           this.challenges_page++;
         }
         
