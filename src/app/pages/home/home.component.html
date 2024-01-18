@@ -5,6 +5,9 @@
         <app-card-challenge class="item" [challenge]="challenge" (click)="viewChallenge(challenge.id)"></app-card-challenge>
     }@empty {
       <div style="text-align: center;color:white;font-size: large;">No hay retos, pero muy pronto esto será muy emocionante</div>
+      <div>
+        <img src="assets/imageD.jpeg" style="width: 100%;">
+      </div>
     }
     @if(challenges_has_more && this.challenges_loaded) {
         <button
