@@ -7,7 +7,7 @@
         <mat-slide-toggle
             class="example-margin example-half-width"
             [checked]="found && found.length>0"
-            [disabled]="!this.session.user || challenge.end_date_local<today"
+            [disabled]="challenge.end_date_local<today"
             (change)="subscription($event)"
             >
           @if(found && found.length>0){

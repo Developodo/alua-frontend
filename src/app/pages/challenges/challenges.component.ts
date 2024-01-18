@@ -118,6 +118,7 @@ export class ChallengesComponent implements OnInit, AfterViewInit {
   private api = inject(ApiService);
   private session = inject(LocalSessionService)
   private dateAdapter: DateAdapter<Date> = inject(DateAdapter)
+
   @ViewChild(ImageCropperComponent) imageCropper!: ImageCropperComponent;
 
   private searchSubject = new Subject<string>();
@@ -158,7 +159,7 @@ export class ChallengesComponent implements OnInit, AfterViewInit {
     segments_selected_loaded: false,
     distance: 0
   });
-
+ 
   challenge: WritableSignal<challenge> = signal({
     id: 0,
     name: '',
@@ -200,23 +201,28 @@ export class ChallengesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if(this.session.user?.athlete.clubs && this.session.user?.athlete.clubs.length()>0){
+    if(this.session.user &&
+          this.session.user?.athlete && 
+          this.session.user?.athlete.clubs && 
+          this.session.user?.athlete.clubs.length>0){
       this.club.update((c) => ({
         ...c,
-        clubs: this.session.user?.athlete.clubs,
-        clubsLoaded:true
-      }))
-      return;
-    }
-    
-    this.strava.getClubs().subscribe((d) => {
-      this.club.update((c) => ({
-        ...c,
-        clubs: d,
+        clubs: this.session.user?this.session.user.athlete.clubs:[],
         clubsLoaded:true
       }))
       this.myForm.get('club')?.enable();
-    });
+    }else if(!this.session.user?.athlete.clubs || this.session.user?.athlete.clubs.length==0){
+      this.strava.getClubs().subscribe((d) => {
+        this.club.update((c) => ({
+          ...c,
+          clubs: d,
+          clubsLoaded:true
+        }))
+        this.myForm.get('club')?.enable();
+      });
+    }
+    
+    
   }
 
   selectClub(club: any) {

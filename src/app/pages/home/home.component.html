@@ -4,6 +4,17 @@
     @for(challenge of challenges; track challenge.id) {
         <app-card-challenge class="item" [challenge]="challenge" (click)="viewChallenge(challenge.id)"></app-card-challenge>
     }
+    @if(challenges_has_more && this.challenges_loaded) {
+        <button
+          style="width: 100%"
+          mat-raised-button
+          color="primary"
+          (click)="loadChallenges()"
+        >
+          <mat-icon>load</mat-icon>
+          Cargar más segmentos
+        </button>
+      }
 }@placeholder{
     <mat-progress-bar
 class="example-margin"

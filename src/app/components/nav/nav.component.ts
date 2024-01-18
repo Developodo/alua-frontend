@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { StravaService } from '../../services/strava.service';
+import { RedirecService } from '../../services/redirec.service';
 
 @Component({
   selector: 'app-nav',
@@ -20,6 +21,7 @@ export class NavComponent {
   @Input() root:string="false";
   public session = inject(LocalSessionService);
   public strava = inject(StravaService);
+  redirect = inject(RedirecService);
   router = inject(Router);
   public athlete = this.session.user?.athlete
 
@@ -70,9 +72,7 @@ export class NavComponent {
   }
 
   public login(){
-    console.log(window.location.href)
-    localStorage.setItem('url', window.location.href);
-    console.log(localStorage.getItem('url'));
+    this.redirect.setRedirect(window.location.href);
     this.router.navigate(['/login']);
   }
 }

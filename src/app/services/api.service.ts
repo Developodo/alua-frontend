@@ -64,8 +64,7 @@ export class ApiService {
 
   getChallengesByClubs(ids:string,page=1){
     //return mockApi.getDetailedChallenge();
-    console.log(ids)
-    const segmentUrl = `${this.apiURL}challenges/clubs/${ids}`;
+    const segmentUrl = `${this.apiURL}challenges/clubs/${ids}/page/${page}`;
     //const headers = { Authorization: `Bearer ${this.sessionService.user?.access_token}` };
     const header = {};
     return this.http.get(segmentUrl, header);

@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmComponent } from '../../components/confirm/confirm.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { RedirecService } from '../../services/redirec.service';
 
 
 
@@ -28,6 +30,8 @@ export class ViewChallengeComponentPage{
   private dialog = inject(MatDialog);
   today=new Date(new Date()).toISOString();
   router=inject(Router);
+  _snackBar = inject(MatSnackBar);
+  redirect=inject(RedirecService)
   
   @Input() id = '';
   api = inject(ApiService);
@@ -37,7 +41,13 @@ export class ViewChallengeComponentPage{
 
   ngOnInit(): void {
     this.api.getChallenge(Number(this.id)).subscribe((d: any) => {
-      console.log(d);
+      if(!d){
+        if(this.session.user)
+          this.router.navigate(['/home']);
+        else
+          this.router.navigate(['/login']);
+        return;
+      }
       if(!Array.isArray(d.athletes)){
         d.athletes=[];
       }
@@ -47,7 +57,16 @@ export class ViewChallengeComponentPage{
     })
   }
   subscription(event: any){
-    if(!this.session.user || this.challenge.end_date_local<this.today){
+    if(this.challenge.end_date_local<this.today){
+      return;
+    }
+    if(!this.session.user){
+      event.source.checked =false;
+      this._snackBar.open("Inicia sesión para inscribirte", "Vamos!")
+      .afterDismissed().subscribe(()=>{
+        this.redirect.setRedirect(window.location.href);
+        this.router.navigate(['/login'])
+      });
       return;
     }
     if(event.checked){

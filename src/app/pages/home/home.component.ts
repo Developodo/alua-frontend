@@ -25,7 +25,7 @@ import { StravaService } from '../../services/strava.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavComponent,CardChallengeComponent,MatProgressBarModule],
+  imports: [NavComponent,CardChallengeComponent,MatProgressBarModule,MatIconModule,MatButtonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -37,6 +37,9 @@ export class HomeComponent implements OnInit{
 
   challenges:challenge[]=[]
   challenges_loaded=false
+  challenges_page=1;
+  challenges_has_more=true;
+
 
   ngOnInit(): void {
     console.log(this.session.user);
@@ -47,31 +50,31 @@ export class HomeComponent implements OnInit{
     }
 
 
-    if(this.session.user && this.session.user.athlete && !this.session.user.athlete.clubs){
-      this.strava.getClubs().subscribe(d=>{
-        this.session.user && (this.session.user.athlete.clubs=d);
-        if(!this.challenges_loaded){
-          if(this.session.user && this.session.user.athlete.clubs && this.session.user.athlete.clubs.length>0){
-            let ids = this.session.user.athlete.clubs.map((c:any)=>c.id).join(",")
-            this.api.getChallengesByClubs(ids).subscribe(response=>{
-              this.challenges=response as any;
-              this.challenges_loaded=true
-            })
-          }
-          /*this.api.getChallenges().subscribe(response=>{
-            this.challenges=response as any;
-            this.challenges_loaded=true
-          })*/
-        }
-      })
-    }
-    
 
-    
-    
+          this.loadChallenges();
   }
 
   viewChallenge(id:number){
     this.router.navigate(['/challenge',id]);
+  }
+
+  loadChallenges(){
+    if(this.session.user && this.session.user.athlete.clubs && this.session.user.athlete.clubs.length>0){
+      let ids = this.session.user.athlete.clubs.map((c:any)=>c.id).join(",")
+      this.challenges_loaded=false;
+      this.api.getChallengesByClubs(ids,this.challenges_page).subscribe((r:any)=>{
+        if(r.length==0){
+          this.challenges_has_more=false;
+        }else{
+          this.challenges=[...this.challenges,...r];
+          this.challenges_loaded=true;
+          this.challenges_page++;
+        }
+        
+      })
+    }else{
+      this.challenges=[];
+      this.challenges_loaded=true
+    }
   }
  }

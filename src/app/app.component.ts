@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { StravaService } from './services/strava.service';
 import { LoginComponent } from './pages/login/login.component';
 import { LocalSessionService } from './services/local-session.service';
+import { RedirecService } from './services/redirec.service';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +15,9 @@ import { LocalSessionService } from './services/local-session.service';
 })
 export class AppComponent {
   private session = inject(LocalSessionService)
-  constructor(private strava: StravaService, private route: ActivatedRoute,private router:Router) {
-    
-    if(this.session.user){
-      //this.router.navigate(['/home']);
-    }
+  redirect = inject(RedirecService);
 
+  constructor(private strava: StravaService, private route: ActivatedRoute,private router:Router) {
     // Manejo del código de autorización en la URL
     this.route.queryParams.subscribe(params => {
       const code = params['code'];
@@ -30,6 +28,11 @@ export class AppComponent {
           // Aquí puedes manejar la respuesta, almacenar el token, etc.
           console.log('Token response:', response);
           this.strava.authUser(response as any);
+          if(this.redirect.hasToRedirect()){
+            window.location.replace(this.redirect.getRedirect() as any);
+          }else{
+            this.router.navigate(['/home']);
+          }
         });
       }
     });
