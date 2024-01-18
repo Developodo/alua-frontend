@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit{
       let ids = this.session.user.athlete.clubs.map((c:any)=>c.id).join(",")
       this.challenges_loaded=false;
       this.api.getChallengesByClubs(ids,this.challenges_page).subscribe((r:any)=>{
-        if(r.length==0){
+        if(r.length==0 || r.length<5){
           this.challenges_has_more=false;
           this.challenges_loaded=true;
         }else{
