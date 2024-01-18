@@ -201,6 +201,7 @@ export class ChallengesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    console.log(this.session.user)
     if(this.session.user &&
           this.session.user?.athlete && 
           this.session.user?.athlete.clubs && 
