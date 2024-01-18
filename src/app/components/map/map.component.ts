@@ -95,9 +95,8 @@ export class MapComponent implements OnInit{
   });
   firstpolyline.addTo(this.map);
   //let bounds = new Leaflet.LatLngBounds(this.start, this.end);
-  let bounds = new Leaflet.LatLngBounds(firstpolyline.getBounds() as any);
-  this.map.fitBounds(bounds);
-  //this.map.fitBounds(firstpolyline.getBounds());
+  //this.map.fitBounds(bounds);
+  this.map.fitBounds(firstpolyline.getBounds());
   this.initMarkers(this.start,this.end);
 
   (Leaflet.control as any).fullscreen({
