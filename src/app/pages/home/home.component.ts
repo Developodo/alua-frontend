@@ -68,8 +68,9 @@ export class HomeComponent implements OnInit{
           this.challenges_loaded=true;
         }else{
           this.challenges=[...this.challenges,...r];//la api trae 3 de cada grupo
-          this.challenges_loaded=r.length<3?false:true;
+          this.challenges_loaded=true;
           this.challenges_page++;
+          this.challenges_has_more=r.length<3?false:true;
         }
         
       })
