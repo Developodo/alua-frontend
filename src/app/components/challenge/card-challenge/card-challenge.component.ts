@@ -18,6 +18,7 @@ export class CardChallengeComponent {
   @Input() challenge!: challenge;
 
   ngOnInit(){
+    console.log(this.challenge.start_date_local);
     console.log(this.challenge.end_date_local);
     console.log(this.today)
   }
