@@ -14,7 +14,7 @@
           @if(found && found.length>0){
                 Inscrito!
           }@else{
-                No estás inscrito
+                Inscríbete!
           }
            
         </mat-slide-toggle>
@@ -31,7 +31,14 @@
               <mat-card-header>
                 <div mat-card-avatar [style.background-image]="'url(' + a.profile + ')'" style="background-size: cover;"></div>
                 <mat-card-title style="color:white">
-                  {{a.firstname}}     
+                  {{a.firstname}}    
+                  @if(!a.performance) {
+                  <mat-icon style="vertical-align: middle;color:red" fontIcon="not_started"></mat-icon>
+                  }@else if(a.performance && a.performance.stages && a.performance.stages.length < challenge.stages.length){
+                    <mat-icon style="vertical-align: middle;color:yellow" fontIcon="not_started"></mat-icon>
+                  }@else{
+                    <mat-icon style="vertical-align: middle;color:green" fontIcon="check_small"></mat-icon>
+                  }
                 </mat-card-title>
               </mat-card-header>
             </mat-card>
@@ -53,7 +60,7 @@
     mode="indeterminate"
   >
   </mat-progress-bar>
-  <div style="width:100%;align-items: center;color:white;font-size: large">Estamos preparando todo para ti</div>
+  <div style="width:100%;text-align: center;color:white;font-size: large">Estamos preparando todo para ti</div>
 }
     <app-view-challenge [challenge]="challenge"></app-view-challenge>
 

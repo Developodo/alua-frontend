@@ -60,8 +60,7 @@ import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { LocalSessionService } from '../../services/local-session.service';
-import { userStrava } from '../../model/userStrava';
-import * as Leaflet from 'leaflet';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 const today = new Date();
 const month = today.getMonth();
@@ -104,7 +103,8 @@ interface status_club{
     MapComponent,
     ViewChallengeComponent,
     MatSlideToggleModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    EditorModule
   ],
   templateUrl: './challenges.component.html',
   styleUrl: './challenges.component.scss',

@@ -62,7 +62,9 @@ export class ViewChallengeComponentPage{
     })
   }
   async subscription(event: any){
-    if(this.challenge.end_date_local<this.today){
+    this.found = this.challenge.athletes?.filter((a: any)=>a.id==this.session.user?.athlete?.id);
+    if(this.challenge.end_date_local<this.today || (this.found.length>0 && this.found[0].performance)){
+      event.source.checked =false;
       return;
     }
     if(!this.session.user){
@@ -79,17 +81,24 @@ export class ViewChallengeComponentPage{
       //fuegos artificiales
       this.subscribing=true;
       await lastValueFrom(this.api.subscribeChallenge(Number(this.id)));
+      
       /*buscar this.session.user.athlete.id en this.challenge.athletes*/
-      if(!this.found || this.found.length==0)
+      if(!this.found || this.found.length==0){
+        if(!this.found){
+          this.found=[];
+        }
+        this.found.push(this.session.user?.athlete as any);
         this.challenge.athletes?.push(this.session.user?.athlete as any);
+      }
+        
 
         const idSegments = this.challenge.stages?.map((s: any)=>s.id);
         await this.strava.starSegments(idSegments)
         this.subscribing=false;
       try {
         this.confetti({
-          angle: this.random(40, 160),
-          spread: this.random(10, 60),
+          angle: this.random(80, 120),
+          spread: this.random(20, 50),
           particleCount: this.random(80, 200),
           origin: {
               y: 0.6
@@ -107,13 +116,16 @@ export class ViewChallengeComponentPage{
         },
         width:"50%"
       });
-      dref.afterClosed().subscribe(result=>{
+      dref.afterClosed().subscribe(async result=>{
          //alert de seguro
          if(result){
           this.found=false;
+          this.subscribing=true;
           this.challenge.athletes=this.challenge.athletes?.filter((a: any)=>a.id!=this.session.user?.athlete?.id);
-          this.api.unsubscribeChallenge(Number(this.id)).subscribe((d:any)=>console.log(d));
-         }else{
+          await lastValueFrom(this.api.unsubscribeChallenge(Number(this.id)));
+          this.subscribing=false;
+          
+        }else{
            event.source.checked = true;
          }
      

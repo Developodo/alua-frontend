@@ -3,4 +3,5 @@ export interface athletedto{
     firstname:string
     profile:string
     profile_medium:string
+    performance?:any
 }

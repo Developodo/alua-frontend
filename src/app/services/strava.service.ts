@@ -129,7 +129,10 @@ export class StravaService {
   public async starSegment(id:number){
     const starredUrl = `https://www.strava.com/api/v3/segments/${id}/starred`;
     const headers = { Authorization: `Bearer ${this.sessionService.user?.access_token}` };
-    return this.http.put(starredUrl,{}, { headers });
+    const body={
+      starred:true
+    }
+    return this.http.put(starredUrl,body, { headers });
   }
 
   /**
