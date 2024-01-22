@@ -45,6 +45,16 @@ export class StravaService {
     this.router.navigate(['/login']);
   }
 
+  refreshToken(){
+    const body = {
+      client_id: this.clientId,
+      client_secret: this.clientSecret,
+      grant_type: 'refresh_token',
+      refresh_token: this.sessionService.user?.access_token
+    };
+    return this.http.post(this.tokenUrl, body);
+  }
+
   refreshLogin(){
     return new Promise((resolve,reject)=>{
 

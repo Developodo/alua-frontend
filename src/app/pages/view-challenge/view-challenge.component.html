@@ -5,23 +5,25 @@
     <mat-card-content>
       <section class="example-section">
  
-        <mat-slide-toggle
-            class="example-margin example-half-width"
-            [checked]="found && found.length>0"
-            [disabled]="challenge.end_date_local<today"
-            (change)="subscription($event)"
-            >
-          @if(found && found.length>0){
-                Inscrito!
-          }@else{
-                Inscríbete!
-          }
-           
-        </mat-slide-toggle>
-        <mat-accordion>
+
+        <mat-accordion style="width: 100%;">
             <mat-expansion-panel [disabled]="!challenge?.athletes || challenge?.athletes?.length==0">
               <mat-expansion-panel-header>
                 <mat-panel-title>
+                  <mat-slide-toggle
+                  (click)="$event.stopPropagation()"
+                  class="example-margin"
+                  [checked]="found && found.length>0"
+                  [disabled]="challenge.end_date_local<today"
+                  (change)="subscription($event)"
+                  >
+                @if(found && found.length>0){
+                      Inscrito!
+                }@else{
+                      Inscríbete!
+                }
+                 
+              </mat-slide-toggle>
                     Deportistas Inscritos: {{challenge.athletes?challenge.athletes?.length:0}}
                 </mat-panel-title>
               </mat-expansion-panel-header>

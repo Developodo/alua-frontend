@@ -3,7 +3,7 @@
             [matMenuTriggerFor]="menu"
             color="primary"
             style="
-            z-index:9999;
+            z-index:999;
             position: absolute;
     right: 0;
     margin-right: 5px;
@@ -39,7 +39,7 @@
             
     </mat-card-title>
     </mat-card-header>
-    <label style="text-align:center;color:white;font-family: Quantum;position:relative;z-index:9998;margin-bottom:-2rem;font-size: 2rem;background-color: rgba(0, 0, 0, 0.5);padding:5px">
+    <label style="text-align:center;color:white;font-family: Quantum;position:relative;z-index:998;margin-bottom:-2rem;font-size: 2rem;background-color: rgba(0, 0, 0, 0.5);padding:5px">
         {{challenge.name}}
     </label>
     <img mat-card-image [src]="challenge.image?challenge.image:'/assets/imageD.jpeg'" alt="Photo of a Shiba Inu">
@@ -65,7 +65,7 @@
       <mat-card-header>
         <mat-card-title style="color:white">#{{ i+1 }} {{s.name}}</mat-card-title>
         <mat-card-subtitle style="margin-bottom: 7px;"><mat-icon style="vertical-align: middle;">straighten</mat-icon> {{s.distance | km}}  <mat-icon style="vertical-align: middle;">trending_up</mat-icon> {{s.total_elevation_gain}}m
-        <mat-icon style="vertical-align: middle;position: absolute; right: 20px;cursor:pointer;scale: 1.5;color:#c2185b" (click)="visitStrava(s.id)">visibility</mat-icon>
+        <mat-icon style="vertical-align: middle;position: absolute; right: 20px;cursor:pointer;scale: 1.5;color:#c2185b" (click)="visitStrava(s.id)">info</mat-icon>
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
