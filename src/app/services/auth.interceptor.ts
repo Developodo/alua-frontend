@@ -7,13 +7,13 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment.development';
 
 let isRefreshing=false;
-let session = inject(LocalSessionService);
+
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   if(req.url.includes(environment.urlApi)) {
     return next(req);
   }
-  // console.log("--------------",req,"--------------");
+   console.log("--------------",req,"--------------");
 
   
   /*req = req.clone({
@@ -34,6 +34,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         !req.url.includes('oauth/authorize') &&
         error.status === 401
       ) {
+        console.log("OJO QUE NOS VAMOS PARA el 401")
         return handle401Error(req, next as any);
       }
 
@@ -43,6 +44,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 };
 
 const handle401Error = (request: HttpRequest<any>, next: HttpHandlerFn) => {
+  let session = inject(LocalSessionService);
   if (!isRefreshing) {
     isRefreshing = true;
     let strava = inject(StravaService);
