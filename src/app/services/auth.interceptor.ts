@@ -10,6 +10,8 @@ let isRefreshing=false;
 
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  let strava = inject(StravaService);
+  const session = inject(LocalSessionService);
   if(req.url.includes(environment.urlApi)) {
     return next(req);
   }
@@ -35,7 +37,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         error.status === 401
       ) {
         console.log("OJO QUE NOS VAMOS PARA el 401")
-        return handle401Error(req, next as any);
+        return handle401Error(req, next as any,strava,session);
       }
 
       return throwError(() => error);
@@ -43,11 +45,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   );
 };
 
-const handle401Error = (request: HttpRequest<any>, next: HttpHandlerFn) => {
-  const session = inject(LocalSessionService);
+const handle401Error = (request: HttpRequest<any>, next: HttpHandlerFn,strava:StravaService,session:LocalSessionService) => {
+  
   if (!isRefreshing) {
     isRefreshing = true;
-    let strava = inject(StravaService);
+    
     //let router = inject(Router);
 
     if (session.user) {
