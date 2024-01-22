@@ -7,10 +7,9 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment.development';
 
 let isRefreshing=false;
-
+let session = inject(LocalSessionService);
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  let session = inject(LocalSessionService);
   if(req.url.includes(environment.urlApi)) {
     return next(req);
   }
@@ -44,7 +43,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 };
 
 const handle401Error = (request: HttpRequest<any>, next: HttpHandlerFn) => {
-  let session = inject(LocalSessionService);
   if (!isRefreshing) {
     isRefreshing = true;
     let strava = inject(StravaService);
