@@ -44,11 +44,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 };
 
 const handle401Error = (request: HttpRequest<any>, next: HttpHandlerFn) => {
-  let session = inject(LocalSessionService);
+  const session = inject(LocalSessionService);
   if (!isRefreshing) {
     isRefreshing = true;
     let strava = inject(StravaService);
-    let router = inject(Router);
+    //let router = inject(Router);
 
     if (session.user) {
       return strava.refreshToken().pipe(
@@ -67,7 +67,7 @@ const handle401Error = (request: HttpRequest<any>, next: HttpHandlerFn) => {
 
           if (error.status == '403') {
             session.user=null;
-            router.navigate(['/login']);
+            //router.navigate(['/login']);
           
           }
 
