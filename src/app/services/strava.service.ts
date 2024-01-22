@@ -50,7 +50,7 @@ export class StravaService {
       client_id: this.clientId,
       client_secret: this.clientSecret,
       grant_type: 'refresh_token',
-      refresh_token: this.sessionService.user?.access_token
+      refresh_token: this.sessionService.user?.refresh_token
     };
     return this.http.post(this.tokenUrl, body);
   }
