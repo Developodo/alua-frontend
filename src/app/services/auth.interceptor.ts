@@ -13,8 +13,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   if(req.url.includes(environment.urlApi)) {
     return next(req);
   }
-   console.log("--------------",req,"--------------");
-  
+  // console.log("--------------",req,"--------------");
+
   
   /*req = req.clone({
     withCredentials: true,
